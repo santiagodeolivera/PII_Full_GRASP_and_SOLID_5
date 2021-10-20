@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Full_GRASP_And_SOLID
 {
@@ -13,6 +14,8 @@ namespace Full_GRASP_And_SOLID
     {
         // Cambiado por OCP
         private IList<BaseStep> steps = new List<BaseStep>();
+
+        public ReadOnlyCollection<BaseStep> Steps => new ReadOnlyCollection<BaseStep>(this.steps);
 
         public Product FinalProduct { get; set; }
 
@@ -33,21 +36,6 @@ namespace Full_GRASP_And_SOLID
         public void RemoveStep(BaseStep step)
         {
             this.steps.Remove(step);
-        }
-
-        // Agregado por SRP
-        public string GetTextToPrint()
-        {
-            string result = $"Receta de {this.FinalProduct.Description}:\n";
-            foreach (BaseStep step in this.steps)
-            {
-                result = result + step.GetTextToPrint() + "\n";
-            }
-
-            // Agregado por Expert
-            result = result + $"Costo de producción: {this.GetProductionCost()}";
-
-            return result;
         }
 
         // Agregado por Expert
